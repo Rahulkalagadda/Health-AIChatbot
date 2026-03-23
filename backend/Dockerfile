@@ -48,4 +48,4 @@ COPY --from=builder /opt/venv /opt/venv
 COPY . /app/
 
 # Give execution context for Railway's dynamic $PORT
-CMD gunicorn -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:$PORT
+CMD gunicorn -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:${PORT:-8000}
