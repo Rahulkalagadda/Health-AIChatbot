@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     # App Config
     APP_NAME: str = "SevaSetu AI Health Chatbot"
     DEBUG: bool = True
-    ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:8080,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:8080,http://127.0.0.1:3000"
+    ALLOWED_ORIGINS: str = "https://health-ai-chatbot-amber.vercel.app,https://health-ai-chatbot-git-railway-c-915616-rahulkalagaddas-projects.vercel.app,https://health-ai-chatbot.vercel.app,https://health-aichatbot-production.up.railway.app,http://localhost:5173,http://localhost:8080,http://localhost:3000"
     
     # DB Config (Can be URL or components)
     DATABASE_URL: Optional[str] = None

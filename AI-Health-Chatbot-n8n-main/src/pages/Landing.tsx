@@ -333,7 +333,7 @@ const Landing: React.FC = () => {
           <div className="lg:col-span-7">
              <div className="bg-white p-10 rounded-[64px] shadow-2xl shadow-slate-200 border-[16px] border-slate-50 relative group">
                 <div className="aspect-video bg-slate-100 rounded-[40px] overflow-hidden relative shadow-inner">
-                   <img src="https://images.unsplash.com/photo-1543286386-2a6dbcbc3539?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000" alt="Map View" />
+                   <img src="https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=1200&q=80" className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000" alt="Map View" />
                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
                       <div className="w-32 h-32 bg-rose-600/20 rounded-full border-4 border-rose-600 animate-pulse flex items-center justify-center relative">
                          <div className="absolute inset-0 bg-rose-600/40 rounded-full blur-2xl"></div>
