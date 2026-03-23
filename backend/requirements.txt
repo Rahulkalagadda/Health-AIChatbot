@@ -11,7 +11,7 @@ pytesseract
 Pillow
 cloudinary
 faiss-cpu
-sentence-transformers
+fastembed
 # openai-whisper (removed for initial deployment stability)
 # TTS (removed for initial deployment stability)
 python-multipart

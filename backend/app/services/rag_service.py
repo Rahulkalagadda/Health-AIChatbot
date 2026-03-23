@@ -1,7 +1,7 @@
 import faiss
 import numpy as np
 import json
-from sentence_transformers import SentenceTransformer
+
 from ..config.settings import get_settings
 
 settings = get_settings()
@@ -15,10 +15,11 @@ class RAGService:
 
     def _load_model(self):
         if self.embedder is None:
-            print("⏳ Loading RAG embedding model (multilingual-L12)...")
-            from sentence_transformers import SentenceTransformer
-            # Reverting to the L12 model as it works with 1-worker limit
-            self.embedder = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+            print("⏳ Loading RAG embedding model (fastembed BAAI/bge-small-en-v1.5)...")
+            from fastembed import TextEmbedding
+            # Using bge-small-en-v1.5 or sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+            # BAAI/bge-small-en-v1.5 is extremely fast and lightweight
+            self.embedder = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
             print("✅ RAG model loaded.")
 
 
@@ -29,12 +30,16 @@ class RAGService:
         self._load_model()
         print(f"📦 Indexing {len(schemes_list)} schemes for RAG search...")
         texts = [f"Name: {s['title']}, Eligibility: {s['eligibility']}, Benefits: {s['description']}" for s in schemes_list]
-        embeddings = self.embedder.encode(texts)
+        
+        # fastembed returns a generator, convert to list of numpy arrays
+        embeddings = list(self.embedder.embed(texts))
+        embeddings = np.array(embeddings)
+        
         print("⚡ Embeddings generated.")
         
         dimension = embeddings.shape[1]
         self.index = faiss.IndexFlatL2(dimension)
-        self.index.add(np.array(embeddings).astype('float32'))
+        self.index.add(embeddings.astype('float32'))
         self.metadata = schemes_list
 
     def search_schemes(self, query: str, top_k: int = 3):
@@ -46,8 +51,11 @@ class RAGService:
         if not query or query.strip() == "":
             return self.metadata[:3]
         
-        query_embedding = self.embedder.encode([query])
-        distances, indices = self.index.search(np.array(query_embedding).astype('float32'), top_k)
+        # Generate query embedding
+        query_embedding = list(self.embedder.embed([query]))[0]
+        query_embedding = np.array([query_embedding])
+        
+        distances, indices = self.index.search(query_embedding.astype('float32'), top_k)
         
         results = []
         # Filter out invalid indices and duplicates

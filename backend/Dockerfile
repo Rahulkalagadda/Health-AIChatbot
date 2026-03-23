@@ -20,9 +20,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 # Install dependencies
 COPY requirements.txt /app/
 
-# Install PyTorch CPU first to prevent pulling massive CUDA binaries, then install rest
 RUN pip install --upgrade pip \
-    && pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu \
     && pip install --no-cache-dir -r requirements.txt
 
 # Stage 2: Runtime
