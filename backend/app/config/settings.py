@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     # App Config
     APP_NAME: str = "SevaSetu AI Health Chatbot"
     DEBUG: bool = True
+    ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:8080,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:8080,http://127.0.0.1:3000"
     
     # DB Config (Can be URL or components)
     DATABASE_URL: Optional[str] = None
@@ -20,7 +21,7 @@ class Settings(BaseSettings):
     def get_sqlalchemy_url(self):
         if self.DATABASE_URL:
             # Render/Heroku sometimes use 'postgres://', but SQLAlchemy requires 'postgresql://'
-            if self.DATABASE_URL.startswith("postgres://"):
+            if self.DATABASE_URL and self.DATABASE_URL.startswith("postgres://"):
                 return self.DATABASE_URL.replace("postgres://", "postgresql://", 1)
             return self.DATABASE_URL
         

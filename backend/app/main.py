@@ -7,6 +7,7 @@ from .routes import chat_routes, analysis_routes, scheme_routes, translation_rou
 from .services.rag_service import rag_service
 from .models.search_model import Base as SearchBase
 from .models.scheme_model import SchemeCache
+from .config.settings import get_settings
 import uvicorn
 
 # Initialize database tables
@@ -16,16 +17,10 @@ app = FastAPI(title="SevaSetu AI Health Chatbot Backend")
 print("🔥 Backend service is initializing...")
 
 # Middleware
+settings = get_settings()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:8080",
-        "http://localhost:5173",
-        "http://localhost:3000",
-        "http://127.0.0.1:8080",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=settings.ALLOWED_ORIGINS.split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
