@@ -47,5 +47,9 @@ COPY --from=builder /opt/venv /opt/venv
 # Copy the backend project files
 COPY . /app/
 
+# Expose the default port
+EXPOSE 8000
+
 # Give execution context for Railway's dynamic $PORT
-CMD gunicorn -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:${PORT:-8000}
+# Hardcoded to 8000 as requested for public networking
+CMD gunicorn -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8000
