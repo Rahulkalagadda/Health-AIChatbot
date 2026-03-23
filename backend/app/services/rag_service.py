@@ -15,10 +15,10 @@ class RAGService:
 
     def _load_model(self):
         if self.embedder is None:
-            print("⏳ Loading RAG embedding model (L6-multilingual-light)...")
+            print("⏳ Loading RAG embedding model (multilingual-L12)...")
             from sentence_transformers import SentenceTransformer
-            # Using L6 instead of L12 to save 50% RAM and avoid Crashes/OOM
-            self.embedder = SentenceTransformer('paraphrase-multilingual-MiniLM-L6-v2')
+            # Reverting to the L12 model as it works with 1-worker limit
+            self.embedder = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
             print("✅ RAG model loaded.")
 
 
