@@ -1,0 +1,48 @@
+# Version control
+.git
+.gitignore
+
+# Python byte-code and caches
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv
+venv
+env
+ENV
+
+# Test artefacts
+.pytest_cache
+.coverage
+htmlcov/
+*.log
+
+# Editor / IDE metadata
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS artefacts
+.DS_Store
+Thumbs.db
+
+# Docs / markdown (not needed at runtime)
+*.md
+DEPLOY_RENDER.md
+README.md
+
+# Alembic migration scripts (run separately, not baked into image)
+alembic/
+
+# Local env files — secrets must come from Railway env vars, never the image
+.env
+.env.*
