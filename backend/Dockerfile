@@ -52,4 +52,5 @@ EXPOSE 8000
 
 # Give execution context for Railway's dynamic $PORT
 # Hardcoded to 8000 as requested for public networking
-CMD gunicorn -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8000
+# Limited to 1 worker to prevent Out-Of-Memory (OOM) crashes on small servers
+CMD ["gunicorn", "--workers", "1", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "app.main:app"]
