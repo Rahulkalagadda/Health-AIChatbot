@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: sevasetu-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sevasetu-db
+          property: connectionString
+      - key: GROQ_API_KEY
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        value: "dlyoyw7t5"
+      - key: CLOUDINARY_API_KEY
+        value: "366937417593116"
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: "HS256"
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "30"

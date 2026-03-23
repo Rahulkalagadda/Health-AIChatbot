@@ -1,0 +1,4 @@
+cd c:\Users\Lenovo\Desktop\Health-AIChatbot\backend; & "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\python3.11.exe" -m venv .venv; .\.venv\Scripts\Activate.ps1; python -m pip install --upgrade pip; python -m pip install -r requirements.tx
+PS C:\Users\Lenovo\Desktop\Health-AIChatbot\backend> cd c:\Users\Lenovo\Desktop\Health-AIChatbot\backend; & "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\python3.11.exe" -m venv .venv; .\.venv\Scripts\Activate.ps1; python -m pip install --upgrade pip; python -m pip install -r requirements.txt
+
+.\.venv\Scripts\Activate.ps1; uvicorn app.main:app --reload
