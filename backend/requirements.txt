@@ -12,8 +12,8 @@ Pillow
 cloudinary
 faiss-cpu
 sentence-transformers
-openai-whisper
-TTS
+# openai-whisper (removed for initial deployment stability)
+# TTS (removed for initial deployment stability)
 python-multipart
 python-jose[cryptography]
 passlib[bcrypt]
