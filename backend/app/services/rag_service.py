@@ -8,17 +8,24 @@ settings = get_settings()
 
 class RAGService:
     def __init__(self):
-        # Using a small and fast model for embeddings
-        print("⏳ Loading RAG embedding model (multilingual)... this may take a few minutes on first run.")
-        self.embedder = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
-        print("✅ RAG model loaded.")
+        # We will load the model lazily to prevent port binding timeouts on Render
+        self.embedder = None
         self.index = None
         self.metadata = []
+
+    def _load_model(self):
+        if self.embedder is None:
+            print("⏳ Loading RAG embedding model (multilingual)... this may take a moment.")
+            from sentence_transformers import SentenceTransformer
+            self.embedder = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+            print("✅ RAG model loaded.")
+
 
     def initialize_index(self, schemes_list: list):
         """
         Takes a list of schemes and creates a vector index.
         """
+        self._load_model()
         texts = [f"Name: {s['title']}, Eligibility: {s['eligibility']}, Benefits: {s['description']}" for s in schemes_list]
         embeddings = self.embedder.encode(texts)
         
@@ -28,6 +35,7 @@ class RAGService:
         self.metadata = schemes_list
 
     def search_schemes(self, query: str, top_k: int = 3):
+        self._load_model()
         if not self.index:
             return []
         
