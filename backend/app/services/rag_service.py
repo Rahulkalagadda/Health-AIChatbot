@@ -15,9 +15,10 @@ class RAGService:
 
     def _load_model(self):
         if self.embedder is None:
-            print("⏳ Loading RAG embedding model (multilingual)... this may take a moment.")
+            print("⏳ Loading RAG embedding model (L6-multilingual-light)...")
             from sentence_transformers import SentenceTransformer
-            self.embedder = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+            # Using L6 instead of L12 to save 50% RAM and avoid Crashes/OOM
+            self.embedder = SentenceTransformer('paraphrase-multilingual-MiniLM-L6-v2')
             print("✅ RAG model loaded.")
 
 
@@ -26,8 +27,10 @@ class RAGService:
         Takes a list of schemes and creates a vector index.
         """
         self._load_model()
+        print(f"📦 Indexing {len(schemes_list)} schemes for RAG search...")
         texts = [f"Name: {s['title']}, Eligibility: {s['eligibility']}, Benefits: {s['description']}" for s in schemes_list]
         embeddings = self.embedder.encode(texts)
+        print("⚡ Embeddings generated.")
         
         dimension = embeddings.shape[1]
         self.index = faiss.IndexFlatL2(dimension)
